@@ -7,7 +7,7 @@
 [![Twitter](https://img.shields.io/badge/twitter-@AlamofireSF-blue.svg?style=flat)](http://twitter.com/AlamofireSF)
 
 Alamofire is an HTTP networking library written in Swift.
-This branch is modified to support Swift 3 and iOS 8.0. The base code from Alamofire is commit #b98fe26 (10th Oct 2016) from Alamofire’s master branch.
+This branch is modified to support Swift 3 and iOS 8.0. The base code from Alamofire is commit #b98fe26cb86c1c1227185d30b87bd57cb45fbe3c (10th Oct 2016) from Alamofire’s master branch.
 
 - [Features](#features)
 - [Component Libraries](#component-libraries)
