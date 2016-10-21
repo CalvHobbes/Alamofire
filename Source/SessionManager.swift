@@ -702,7 +702,7 @@ open class SessionManager {
     }
 
 #if !os(watchOS)
-
+#if ENABLE_STREAM_REQUEST
     // MARK: - Stream Request
 
     // MARK: Hostname and Port
@@ -758,7 +758,7 @@ open class SessionManager {
     }
 
 #endif
-
+#endif
     // MARK: - Internal - Retry Request
 
     func retry(_ request: Request) -> Bool {

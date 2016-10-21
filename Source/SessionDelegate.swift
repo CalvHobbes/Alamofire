@@ -106,7 +106,7 @@ open class SessionDelegate: NSObject {
     // MARK: URLSessionStreamDelegate Overrides
 
 #if !os(watchOS)
-
+#if ENABLE_STREAM_REQUEST
     /// Overrides default behavior for URLSessionStreamDelegate method `urlSession(_:readClosedFor:)`.
     open var streamTaskReadClosed: ((URLSession, URLSessionStreamTask) -> Void)?
 
@@ -120,7 +120,7 @@ open class SessionDelegate: NSObject {
     open var streamTaskDidBecomeInputAndOutputStreams: ((URLSession, URLSessionStreamTask, InputStream, OutputStream) -> Void)?
 
 #endif
-
+#endif
     // MARK: Properties
 
     var retrier: RequestRetrier?
@@ -159,6 +159,7 @@ open class SessionDelegate: NSObject {
     ///
     /// - returns: `true` if the receiver implements or inherits a method that can respond to selector, otherwise `false`.
     open override func responds(to selector: Selector) -> Bool {
+       
         #if !os(macOS)
             if selector == #selector(URLSessionDelegate.urlSessionDidFinishEvents(forBackgroundURLSession:)) {
                 return sessionDidFinishEventsForBackgroundURLSession != nil
@@ -166,6 +167,7 @@ open class SessionDelegate: NSObject {
         #endif
 
         #if !os(watchOS)
+             #if ENABLE_STREAM_REQUEST
             switch selector {
             case #selector(URLSessionStreamDelegate.urlSession(_:readClosedFor:)):
                 return streamTaskReadClosed != nil
@@ -179,7 +181,7 @@ open class SessionDelegate: NSObject {
                 break
             }
         #endif
-
+ #endif
         switch selector {
         case #selector(URLSessionDelegate.urlSession(_:didBecomeInvalidWithError:)):
             return sessionDidBecomeInvalidWithError != nil
@@ -636,7 +638,7 @@ extension SessionDelegate: URLSessionDownloadDelegate {
 // MARK: - URLSessionStreamDelegate
 
 #if !os(watchOS)
-
+#if ENABLE_STREAM_REQUEST
 extension SessionDelegate: URLSessionStreamDelegate {
     /// Tells the delegate that the read side of the connection has been closed.
     ///
@@ -678,4 +680,5 @@ extension SessionDelegate: URLSessionStreamDelegate {
     }
 }
 
+#endif
 #endif
